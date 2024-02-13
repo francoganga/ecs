@@ -36,7 +36,10 @@ void Game::init()
     m_window.create(sf::VideoMode(1280, 720), "SFML works!");
     m_window.setFramerateLimit(60);
 
-    ImGui::SFML::Init(m_window);
+    bool res = ImGui::SFML::Init(m_window);
+
+    assert(res);
+
     spawnPlayer();
 }
 
@@ -145,7 +148,7 @@ void Game::sInput()
 
         // IMGUI code for mouse
 
-        ImGui::SFML::ProcessEvent(event);
+        ImGui::SFML::ProcessEvent(m_window, event);
 
 
 
