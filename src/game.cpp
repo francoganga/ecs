@@ -93,11 +93,18 @@ void Game::sRender()
     m_window.clear();
 
     m_player->cShape->circle.setPosition(m_player->cTransform->pos.x, m_player->cTransform->pos.y);
-
+    
     m_player->cTransform->angle += 1.0f;
     m_player->cShape->circle.setRotation(m_player->cTransform->angle);
-
+    
     m_window.draw(m_player->cShape->circle);
+
+    for (auto& e : m_entities.getEntities("enemy")) {
+        e->cShape->circle.setPosition(e->cTransform->pos.x, e->cTransform->pos.y);
+        e->cShape->circle.setRotation(e->cTransform->angle);
+        e->cTransform->angle += 2.0f;
+        m_window.draw(e->cShape->circle);
+    }
 
     // draw the ui last 
     ImGui::SFML::Render(m_window);
@@ -161,4 +168,17 @@ void Game::sUserInput()
 
 void Game::sEnemySpawner()
 {
+    spawnEnemy();
+}
+
+void Game::spawnEnemy()
+{
+    auto entity = m_entities.addEntity("enemy");
+
+    float ex = rand() % m_window.getSize().x;
+    float ey = rand() % m_window.getSize().y;
+
+    entity->cTransform = std::make_shared<CTransform>(Vec2(ex, ey), Vec2(1.0f, 1.0f), 0.0f);
+
+    entity->cShape = std::make_shared<CShape>(16.0f, 3, sf::Color(0, 0, 255), sf::Color(255, 255, 255), 4.0f);
 }

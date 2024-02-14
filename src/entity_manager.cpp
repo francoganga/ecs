@@ -10,16 +10,19 @@ void EntityManager::update()
     // add entities from m_entitiesToAdd to m_entities
     // add them to the vector inside the map, with the corresponding tag
 
+    for (auto e: m_entitiesToAdd) {
+        m_entities.push_back(e);
+        m_entityMap[e->tag()].push_back(e);
+    }
+
+    m_entitiesToAdd.clear();
 
     // remove dead entities from the vector
     removeDeadEntities(m_entities);
 
     for(auto& [tag, entityVec] : m_entityMap)
     {
-        for(auto& entity : entityVec)
-        {
-            removeDeadEntities(entityVec);
-        }
+        removeDeadEntities(entityVec);
     }
 
 }

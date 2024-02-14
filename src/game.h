@@ -19,6 +19,7 @@ class Game
 
     void init();
     void spawnPlayer();
+    void spawnEnemy();
     void sEnemySpawner();
     void spawnSmallEnemies(std::shared_ptr<Entity> e);
     void spawnBullet(std::shared_ptr<Entity> e, const Vec2& target);
